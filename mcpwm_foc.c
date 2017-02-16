@@ -429,10 +429,10 @@ void mcpwm_foc_init(volatile mc_configuration *configuration) {
 	chThdCreateStatic(timer_thread_wa, sizeof(timer_thread_wa), NORMALPRIO, timer_thread, NULL);
 
 	// WWDG configuration
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_WWDG, ENABLE);
-	WWDG_SetPrescaler(WWDG_Prescaler_1);
-	WWDG_SetWindowValue(255);
-	WWDG_Enable(100);
+	/*RCC_APB1PeriphClockCmd(RCC_APB1Periph_WWDG, ENABLE);*/
+	/*WWDG_SetPrescaler(WWDG_Prescaler_1);*/
+	/*WWDG_SetWindowValue(255);*/
+	/*WWDG_Enable(100);*/
 }
 
 void mcpwm_foc_deinit(void) {
@@ -1355,8 +1355,8 @@ void mcpwm_foc_adc_inj_int_handler(void) {
 //	curr0 -= ADC_Value[ADC_IND_CURR1];
 //	curr1 -= ADC_Value[ADC_IND_CURR2];
 
-	ADC_curr_norm_value[0] = curr0;
-	ADC_curr_norm_value[1] = curr1;
+	ADC_curr_norm_value[0] = -curr0;
+	ADC_curr_norm_value[1] = -curr1;
 	ADC_curr_norm_value[2] = -(ADC_curr_norm_value[0] + ADC_curr_norm_value[1]);
 
 	float ia = ADC_curr_norm_value[0] * (V_REG / 4095.0) / (CURRENT_SHUNT_RES * CURRENT_AMP_GAIN);

@@ -149,6 +149,8 @@ void terminal_process_string(char *str) {
 		commands_printf("Voltage sample: %u", voltage_samp);
 		commands_printf("Current 1 sample: %u", current1_samp);
 		commands_printf("Current 2 sample: %u\n", current2_samp);
+		commands_printf("Current 1 offset: %u", curr0_offset_term);
+		commands_printf("Current 2 offset: %u\n", curr1_offset_term);
 	} else if (strcmp(argv[0], "volt") == 0) {
 		commands_printf("Input voltage: %.2f\n", (double)GET_INPUT_VOLTAGE());
 	} else if (strcmp(argv[0], "param_detect") == 0) {

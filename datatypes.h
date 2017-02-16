@@ -144,6 +144,8 @@ typedef struct {
 	float lo_current_min;
 	float lo_in_current_max;
 	float lo_in_current_min;
+    int curr0_offset;
+    int curr1_offset;
 	// Sensorless
 	float sl_min_erpm;
 	float sl_min_erpm_cycle_int_limit;

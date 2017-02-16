@@ -40,6 +40,9 @@
 volatile uint16_t ADC_Value[HW_ADC_CHANNELS];
 volatile int ADC_curr_norm_value[3];
 
+volatile int curr0_offset_term;
+volatile int curr1_offset_term;
+
 // Private variables
 static volatile mc_configuration m_conf;
 static mc_fault_code m_fault_now;

@@ -82,6 +82,9 @@ void mc_interface_adc_inj_int_handler(void);
 extern volatile uint16_t ADC_Value[];
 extern volatile int ADC_curr_norm_value[];
 
+extern volatile int curr0_offset_term;
+extern volatile int curr1_offset_term;
+
 // Common fixed parameters
 #define MCPWM_DEAD_TIME_CYCLES			60		// Dead time
 

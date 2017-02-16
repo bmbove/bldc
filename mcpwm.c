@@ -510,16 +510,18 @@ void mcpwm_init_hall_table(int8_t *table) {
 }
 
 static void do_dc_cal(void) {
-	DCCAL_ON();
+	/*DCCAL_ON();*/
+    mcpwm_stop_pwm();
 	while(IS_DRV_FAULT()){};
 	chThdSleepMilliseconds(1000);
 	curr0_sum = 0;
 	curr1_sum = 0;
 	curr_start_samples = 0;
 	while(curr_start_samples < 4000) {};
-	curr0_offset = curr0_sum / curr_start_samples;
-	curr1_offset = curr1_sum / curr_start_samples;
-	DCCAL_OFF();
+	curr0_offset = (curr0_sum / curr_start_samples);
+	curr1_offset = (curr1_sum / curr_start_samples);
+    curr0_offset_term = curr0_offset;
+    curr1_offset_term = curr1_offset;
 	dccal_done = true;
 }
 
@@ -1324,11 +1326,11 @@ static THD_FUNCTION(timer_thread, arg) {
 void mcpwm_adc_inj_int_handler(void) {
 	TIM12->CNT = 0;
 
-	int curr0 = ADC_GetInjectedConversionValue(ADC1, ADC_InjectedChannel_1);
-	int curr1 = ADC_GetInjectedConversionValue(ADC2, ADC_InjectedChannel_1);
+    int curr0 = ADC_GetInjectedConversionValue(ADC1, ADC_InjectedChannel_1);
+    int curr1 = ADC_GetInjectedConversionValue(ADC2, ADC_InjectedChannel_1);
 
-	int curr0_2 = ADC_GetInjectedConversionValue(ADC2, ADC_InjectedChannel_2);
-	int curr1_2 = ADC_GetInjectedConversionValue(ADC1, ADC_InjectedChannel_2);
+    int curr0_2 = ADC_GetInjectedConversionValue(ADC2, ADC_InjectedChannel_2);
+    int curr1_2 = ADC_GetInjectedConversionValue(ADC1, ADC_InjectedChannel_2);
 
 	float curr0_currsamp = curr0;
 	float curr1_currsamp = curr1;
@@ -1365,6 +1367,15 @@ void mcpwm_adc_inj_int_handler(void) {
 	curr1 -= curr1_offset;
 	curr0_2 -= curr0_offset;
 	curr1_2 -= curr1_offset;
+
+    curr0_currsamp = -curr0_currsamp;
+    curr1_currsamp = -curr1_currsamp;
+
+    curr0 = -curr0;
+    curr1 = -curr1;
+
+    curr0_2 = -curr0_2;
+    curr1_2 = -curr1_2;
 
 #if CURR1_DOUBLE_SAMPLE || CURR2_DOUBLE_SAMPLE
 	if (conf->pwm_mode != PWM_MODE_BIPOLAR && conf->motor_type == MOTOR_TYPE_BLDC) {
