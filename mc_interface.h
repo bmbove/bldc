@@ -86,7 +86,8 @@ extern volatile int curr0_offset_term;
 extern volatile int curr1_offset_term;
 
 // Common fixed parameters
-#define MCPWM_DEAD_TIME_CYCLES			60		// Dead time
+// need 135 cycles to make 80uS
+#define MCPWM_DEAD_TIME_CYCLES			135		// Dead time
 
 
 #endif /* MC_INTERFACE_H_ */
