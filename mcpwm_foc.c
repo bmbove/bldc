@@ -429,10 +429,10 @@ void mcpwm_foc_init(volatile mc_configuration *configuration) {
 	chThdCreateStatic(timer_thread_wa, sizeof(timer_thread_wa), NORMALPRIO, timer_thread, NULL);
 
 	// WWDG configuration
-	/*RCC_APB1PeriphClockCmd(RCC_APB1Periph_WWDG, ENABLE);*/
-	/*WWDG_SetPrescaler(WWDG_Prescaler_1);*/
-	/*WWDG_SetWindowValue(255);*/
-	/*WWDG_Enable(100);*/
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_WWDG, ENABLE);
+    WWDG_SetPrescaler(WWDG_Prescaler_1);
+    WWDG_SetWindowValue(255);
+    WWDG_Enable(100);
 }
 
 void mcpwm_foc_deinit(void) {
