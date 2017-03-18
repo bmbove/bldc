@@ -19,12 +19,12 @@
 #define HW_OSU_10_H_
 
 // Macros
-#define ENABLE_GATE()			palSetPad(GPIOC, 10)
-//#define DISABLE_GATE()			palClearPad(GPIOC, 10)
+/* gate enable is active low */
+#define ENABLE_GATE()			palClearPad(GPIOC, 10)
 #define DISABLE_GATE()			palSetPad(GPIOC, 10)
 /* DCCAL same as gate enable/disable */
-#define DCCAL_ON()				palSetPad(GPIOC, 10)
-#define DCCAL_OFF()				palClearPad(GPIOC, 10)
+#define DCCAL_ON()				palClearPad(GPIOC, 10)
+#define DCCAL_OFF()				palSetPad(GPIOC, 10)
 
 /* disable this, since we're not using the DRV chip */
 #define IS_DRV_FAULT()			0

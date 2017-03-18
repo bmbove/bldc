@@ -510,8 +510,7 @@ void mcpwm_init_hall_table(int8_t *table) {
 }
 
 static void do_dc_cal(void) {
-	/*DCCAL_ON();*/
-    mcpwm_stop_pwm();
+    DCCAL_ON();
 	while(IS_DRV_FAULT()){};
 	chThdSleepMilliseconds(1000);
 	curr0_sum = 0;
@@ -522,6 +521,7 @@ static void do_dc_cal(void) {
 	curr1_offset = (curr1_sum / curr_start_samples);
     curr0_offset_term = curr0_offset;
     curr1_offset_term = curr1_offset;
+    DCCAL_OFF();
 	dccal_done = true;
 }
 
@@ -1367,15 +1367,6 @@ void mcpwm_adc_inj_int_handler(void) {
 	curr1 -= curr1_offset;
 	curr0_2 -= curr0_offset;
 	curr1_2 -= curr1_offset;
-
-    curr0_currsamp = -curr0_currsamp;
-    curr1_currsamp = -curr1_currsamp;
-
-    curr0 = -curr0;
-    curr1 = -curr1;
-
-    curr0_2 = -curr0_2;
-    curr1_2 = -curr1_2;
 
 #if CURR1_DOUBLE_SAMPLE || CURR2_DOUBLE_SAMPLE
 	if (conf->pwm_mode != PWM_MODE_BIPOLAR && conf->motor_type == MOTOR_TYPE_BLDC) {

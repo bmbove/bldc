@@ -155,12 +155,6 @@ static THD_FUNCTION(timer_thread, arg) {
 int main(void) {
 	halInit();
 
-	/*RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);*/
-	/*palSetPadMode(GPIOC, 10,*/
-			/*PAL_MODE_OUTPUT_PUSHPULL |*/
-			/*PAL_STM32_OSPEED_HIGHEST);*/
-	/*DISABLE_GATE();*/
-
 	chSysInit();
 
 	chThdSleepMilliseconds(1000);

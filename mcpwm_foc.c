@@ -1355,8 +1355,8 @@ void mcpwm_foc_adc_inj_int_handler(void) {
 //	curr0 -= ADC_Value[ADC_IND_CURR1];
 //	curr1 -= ADC_Value[ADC_IND_CURR2];
 
-	ADC_curr_norm_value[0] = -curr0;
-	ADC_curr_norm_value[1] = -curr1;
+	ADC_curr_norm_value[0] = curr0;
+	ADC_curr_norm_value[1] = curr1;
 	ADC_curr_norm_value[2] = -(ADC_curr_norm_value[0] + ADC_curr_norm_value[1]);
 
 	float ia = ADC_curr_norm_value[0] * (V_REG / 4095.0) / (CURRENT_SHUNT_RES * CURRENT_AMP_GAIN);
